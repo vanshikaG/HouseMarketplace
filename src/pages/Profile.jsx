@@ -1,6 +1,6 @@
 
 import {useState, useEffect} from 'react'
-import {getAuth, updateProfile} from 'firebase/auth '
+import {getAuth, updateProfile} from 'firebase/auth'
 import { useNavigate, Link } from 'react-router-dom'
 import {updateDoc, doc } from 'firebase/firestore'
 import {db} from '../firebase.config'
@@ -10,11 +10,11 @@ function Profile(){
     const auth = getAuth()
     const [changeDetails, setChangeDetails] = useState(false)
     const [formData,setFormData] = useState({
-        name: auth.currentUser.displayName, 
+        name: auth.currentUser.displayName,
         email: auth.currentUser.email,
     })
 
-    const {name, email} = formData 
+    const {name, email} = formData
 
     const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ function Profile(){
    const onSubmit = async() => {
        try {
            if(auth.currentUser.displayName!==name){
-               //update display name in fb 
+               //update display name in fb
                await updateProfile(auth.currentUser,{
                    displayName: name
                })
@@ -46,7 +46,7 @@ function Profile(){
    const onChange = (e) =>{
         setFormData((prevState) => ({
             ...prevState,
-            [e.target.id]: e.target.value, 
+            [e.target.id]: e.target.value,
         }))
    }
 
@@ -57,7 +57,7 @@ function Profile(){
         </header>
 
         <main>
-            <div className='profileDetailsHeader'> 
+            <div className='profileDetailsHeader'>
                 <p className="profileDetailsText">Personal Details</p>
                 <p className="changePersonalDetails" conClick ={()=>{
                     changeDetails && onsubmit()
@@ -69,16 +69,16 @@ function Profile(){
 
             <div className='profileCard'>
                 <form>
-                    <input type="text" 
-                    id="name" 
-                    className={!changeDetails ? 'profileName' : 'profileNameActive'} 
+                    <input type="text"
+                    id="name"
+                    className={!changeDetails ? 'profileName' : 'profileNameActive'}
                     disabled={!changeDetails}
                     value={name}
                     onChange={onChange}
                     />
-                    <input type="text" 
-                    id="email" 
-                    className={!changeDetails ? 'profileEmail' : 'profileEmailActive'} 
+                    <input type="text"
+                    id="email"
+                    className={!changeDetails ? 'profileEmail' : 'profileEmailActive'}
                     disabled={!changeDetails}
                     value={email}
                     onChange={onChange}
@@ -90,4 +90,4 @@ function Profile(){
 
 }
 
-export default Profile 
+export default Profile
